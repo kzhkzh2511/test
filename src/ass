@@ -1,3 +1,4 @@
+``` r
 getwd()
 setwd('D:/R语言/r文件/9.25实训')
 head(dat,1)
@@ -46,3 +47,4 @@ cols = c('正弦波'='black','三角波'='blue','梯形波'='green')
 
 # 绘图
 plot(mydat3[,2], col = cols[mydat3[,1]])
+```
