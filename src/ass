@@ -1,0 +1,48 @@
+getwd()
+setwd('D:/R语言/r文件/9.25实训')
+head(dat,1)
+
+dat=read.table('clipboard',header=FALSE)
+colnames(dat)=c('温度','频率','损耗','波形',paste(1:1024))
+table(dat[,'波形'])
+addmargins(table(dat[,'波形'],dat[,'温度']))
+head(dat,1)
+install.packages("forecast")
+library(moments)
+
+k=apply(dat[,5:1028],1,kurtosis);
+mydat=data.frame(wave=dat[,4],k=k)
+cols=c('正弦波'='black','三角波'='blue','梯形波'='green');
+plot(mydat[,2],col=cols[mydat[,1]])
+
+
+s = apply(dat[,5:1028],1,skewness); # 使用 apply 函数计算偏度系数并存入变量 s
+mydat2 = data.frame(wave=dat[,4],s=s); # 创建新的数据框包含波形和偏度系数
+cols = c('正弦波'='black','三角波'='blue','梯形波'='green');
+plot(mydat2[,2],col=cols[mydat2[,1]]); # 绘制偏度系数的图形，颜色根据波形确定
+
+
+
+# 计算中位数
+median_values <- apply(dat[,5:1028], 1, median)
+mydat_median = data.frame(wave = dat[,4], median = median_values)
+plot(mydat_median[,2], col = cols[mydat_median[,1]], main = "中位数图形", xlab = "数据点", ylab = "中位数")
+
+head(median_values,1)
+dim(v)
+dat[,4]
+
+# 进行差分操作
+v = apply(dat[,5:1028],1,diff)
+
+# 对差分结果按行求均值，尝试将结果维度调整为 3400
+v_mean = apply(v, 2, median, na.rm = TRUE)
+
+# 创建数据框
+mydat3 = data.frame(wave = dat[,4], v = v_mean)
+
+# 定义颜色
+cols = c('正弦波'='black','三角波'='blue','梯形波'='green')
+
+# 绘图
+plot(mydat3[,2], col = cols[mydat3[,1]])

@@ -1,0 +1,6 @@
+getwd()
+setwd('D:/R语言/r文件/9.25实训')
+
+dat=read.table('clipboard',header=FALSE)
+colnames(dat)=c('温度','频率','损耗','波形',paste(1:1024))
+table(dat[,'波形'])
